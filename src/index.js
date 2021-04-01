@@ -30,6 +30,31 @@ const rpi3bDimensions = {
   usbPortHeight: 16,
   usbPort1XOffset: 29,
   usbPort2XOffset: 47,
+
+  microUsbPortWidth: 5.5,
+  microUsbPortLength: 7.75,
+  microUsbPortHeight: 3,
+  microUsbPortXOverhang: 1.5,
+  microUsbPortYOffset: 10.6,
+
+  hdmiPortWidth: 12.25,
+  hdmiPortLength: 14.75,
+  hdmiPortHeight: 6.5,
+  hdmiPortXOverhang: 1.75,
+  hdmiPortYOffset: 32,
+
+  audioPortWidth: 15,
+  audioPortLength: 7.25,
+  audioPortHeight: 6,
+  audioPortXOverhang: 2.5,
+  audioPortYOffset: 53.5,
+
+  sdCardWidth: 12,
+  sdCardLength: 17,
+  sdCardHeight: 1,
+  sdCardYOverhang: 3,
+  sdCardXOffset: 28,
+  sdCardZOffset: -1,
 };
 
 // Based on the drawing for "Raspberry Pi 3B"
@@ -59,6 +84,31 @@ const RaspberryPi3B = () => {
     usbPortHeight,
     usbPort1XOffset,
     usbPort2XOffset,
+
+    microUsbPortWidth,
+    microUsbPortLength,
+    microUsbPortHeight,
+    microUsbPortXOverhang,
+    microUsbPortYOffset,
+
+    hdmiPortWidth,
+    hdmiPortLength,
+    hdmiPortHeight,
+    hdmiPortXOverhang,
+    hdmiPortYOffset,
+
+    audioPortWidth,
+    audioPortLength,
+    audioPortHeight,
+    audioPortXOverhang,
+    audioPortYOffset,
+
+    sdCardWidth,
+    sdCardLength,
+    sdCardHeight,
+    sdCardYOverhang,
+    sdCardXOffset,
+    sdCardZOffset,
   } = rpi3bDimensions;
 
   return (
@@ -90,6 +140,31 @@ const RaspberryPi3B = () => {
         port1XOffset={usbPort1XOffset}
         port2XOffset={usbPort2XOffset}
         yOverhang={peripheralsYOverhang}
+      />
+      <MicroUsbPort
+        boardLength={boardLength}
+        size={[microUsbPortWidth, microUsbPortLength, microUsbPortHeight]}
+        xOverhang={microUsbPortXOverhang}
+        yOffset={microUsbPortYOffset}
+      />
+      <HdmiPort
+        boardLength={boardLength}
+        size={[hdmiPortWidth, hdmiPortLength, hdmiPortHeight]}
+        xOverhang={hdmiPortXOverhang}
+        yOffset={hdmiPortYOffset}
+      />
+      <AudioPort
+        boardLength={boardLength}
+        size={[audioPortWidth, audioPortLength, audioPortHeight]}
+        xOverhang={audioPortXOverhang}
+        yOffset={audioPortYOffset}
+      />
+      <SdCard
+        boardSize={[boardWidth, boardLength, boardHeight]}
+        size={[sdCardWidth, sdCardLength, sdCardHeight]}
+        yOverhang={sdCardYOverhang}
+        xOffset={sdCardXOffset}
+        zOffset={sdCardZOffset}
       />
     </union>
   );
@@ -181,6 +256,55 @@ const UsbPorts = ({ portSize, port1XOffset, port2XOffset, yOverhang }) => {
       <UsbPort xOffset={port1XOffset} />
       <UsbPort xOffset={port2XOffset} />
     </union>
+  );
+};
+
+const MicroUsbPort = ({ boardLength, size, xOverhang, yOffset }) => {
+  const [width, _, height] = size;
+
+  return (
+    <cuboid
+      size={size}
+      center={[width / 2 - xOverhang, boardLength - yOffset, height / 2]}
+    />
+  );
+};
+
+const HdmiPort = ({ boardLength, size, xOverhang, yOffset }) => {
+  const [width, _, height] = size;
+
+  return (
+    <cuboid
+      size={size}
+      center={[width / 2 - xOverhang, boardLength - yOffset, height / 2]}
+    />
+  );
+};
+
+const AudioPort = ({ boardLength, size, xOverhang, yOffset }) => {
+  const [width, _, height] = size;
+
+  return (
+    <cuboid
+      size={size}
+      center={[width / 2 - xOverhang, boardLength - yOffset, height / 2]}
+    />
+  );
+};
+
+const SdCard = ({ boardSize, size, yOverhang, xOffset, zOffset }) => {
+  const [width, length, height] = size;
+  const [boardWidth, boardLength, boardHeight] = boardSize;
+
+  return (
+    <cuboid
+      size={size}
+      center={[
+        xOffset,
+        boardLength - length / 2 + yOverhang,
+        -boardHeight - height / 2,
+      ]}
+    />
   );
 };
 

@@ -309,3 +309,4 @@ const SdCard = ({ boardSize, size, yOverhang, xOffset, zOffset }) => {
 };
 
 export { RaspberryPi3B, rpi3bDimensions };
+export default RaspberryPi3B;

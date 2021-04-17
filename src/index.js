@@ -1,7 +1,4 @@
 import React from "react";
-import path from "path";
-
-import JscadRenderer from "@landaujs/landau";
 
 const rpi3bDimensions = {
   boardWidth: 56,
